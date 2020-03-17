@@ -25,11 +25,11 @@ fn main() {
     let args: Args = argh::from_env();
     let result = match &args.input[..] {
         "" => {
-            let stdin_channel = spawn_stdin_channel();
+            let (receiver, handle) = spawn_stdin_channel();
             sleep(100);
-            match stdin_channel.0.try_recv() {
+            match receiver.try_recv() {
                 Ok(key) => {
-                    if let Err(_) = stdin_channel.1.join() {
+                    if let Err(_) = handle.join() {
                         panic!("Couldn't kill thread.")
                     }
                     key

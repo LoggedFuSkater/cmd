@@ -23,6 +23,10 @@ struct Args {
 
 fn main() {
     let args: Args = argh::from_env();
+    if args.padding > 8 {
+        println!("Padding cannot exceed 8.");
+        return;
+    }
     let result = match &args.input[..] {
         "" => {
             let (receiver, handle) = spawn_stdin_channel();
@@ -35,7 +39,8 @@ fn main() {
                     key
                 },
                 Err(TryRecvError::Empty) => {
-                    panic!("No input given and nothing to read in stdin (pipe).");
+                    println!("Missing input. Either call directly with `lfs \"Input goes here\"` or by piping `echo \"Input goes here\" | lfs`.");
+                    return;
                 },
                 Err(TryRecvError::Disconnected) => {
                     panic!("Channel disconnected");

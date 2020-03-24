@@ -1,9 +1,9 @@
 [package]
 name = "lfs"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["AleSod <alexander.soderholm91@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-logged_fu_skater = "1.0.0"
+logged_fu_skater = "1.0.1"
 argh = "0.1.3"
